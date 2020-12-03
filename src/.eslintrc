@@ -10,7 +10,12 @@
     "linebreak-style": ["error", "windows"],
     "arrow-parens": "off",
     "comma-dangle": "off",
-    "require-jsdoc": "off"
+    "require-jsdoc": "off",
+    "comma-spacing": "off",
+    "new-cap": "off",
+    "keyword-spacing": "off",
+    "operator-linebreak": "off",
+    "no-trailing-spaces": "off",
   },
   "extends":["eslint:recommended", "google"]
 }
