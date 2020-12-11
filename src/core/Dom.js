@@ -5,10 +5,18 @@ class Dom {
         :selector
   }
   html(html) {
-    typeof html === 'string'
-    ? this.$el.innerHTML = html
-        :this.$el.innerHTML
-    return this
+    if(typeof html === 'string') {
+      this.$el.innerHTML = html
+      return this
+    }
+    return this.$el.innerHTML.trim()
+  }
+  text(text) {
+    if(typeof text === 'string') {
+      this.$el.textContent = text
+      return this
+    }
+    return this.$el.textContent.trim()
   }
   clear() {
     this.$el.innerHTML = ''
@@ -28,7 +36,7 @@ class Dom {
   on(eventName,callback) {
     this.$el.addEventListener(eventName,callback)
   }
-  remove(eventName,callback) {
+  off(eventName,callback) {
     this.$el.removeEventListener(eventName,callback)
   }
   get data() {
@@ -40,12 +48,37 @@ class Dom {
   coords() {
     return this.$el.getBoundingClientRect()
   }
-  getSelector(selector) {
+  getSelectorAll(selector) {
     return this.$el.querySelectorAll(selector)
+  }
+  find(selector) {
+    return $(this.$el.querySelector(selector))
   }
   css(styles={}) {
     Object.keys(styles)
         .forEach(key=>this.$el.style[key] = styles[key])
+  }
+  focus() {
+    this.$el.focus()
+    return this
+  }
+  addClass(className) {
+    this.$el.classList.add(className)
+    return this
+  }
+  removeClass(className) {
+    this.$el.classList.remove(className)
+    return this
+  }
+  id(parse) {
+    if(parse) {
+      const parseId = this.id().split(':')
+      return {
+        row: +parseId[0],
+        col: +parseId[1]
+      }
+    }
+    return this.data.id
   }
 }
 

@@ -31,7 +31,7 @@ export function tableResize(root,event) {
 
     if(dataType === 'col') {
       $parent.css({width: value + 'px'})
-      root.getSelector(`[data-col="${$parent.data.col}"]`)
+      root.getSelectorAll(`[data-col="${$parent.data.col}"]`)
           .forEach(el => el.style.width = value + 'px')
     }else {
       $parent.css({height: value + 'px'})

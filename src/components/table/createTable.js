@@ -2,10 +2,17 @@ const charCode ={
   A: 65,
   Z: 90
 }
-const createCell = (val = '',col) =>{
-  return`
-    <div class="cell" contenteditable data-col=${col}>${val}</div>
+
+const createCell = row =>{
+  return function(_,col) {
+    return`
+    <div class="cell" contenteditable 
+    data-col="${col}"
+    data-type = "cell"
+    data-id = "${row}:${col}">
+    </div>
     `
+  }
 }
 const createCol = (el,index) =>{
   return`
@@ -36,8 +43,11 @@ const colValue = rowLen =>{
       .join('')
 }
 
+export let rowcount
+export let rowLen
 export function createTable(rowCount = 15) {
-  const rowLen = charCode.Z - charCode.A + 1
+  rowcount = rowCount
+  rowLen = charCode.Z - charCode.A + 1
   const row = []
 
   row.push(createRow(null,colValue(rowLen)))
@@ -45,8 +55,9 @@ export function createTable(rowCount = 15) {
   for (let i = 0; i < rowCount; i++) {
     const cells = new Array(rowLen)
         .fill('')
-        .map(createCell)
+        .map(createCell(i))
         .join('')
+
     row.push(createRow(i + 1,cells))
   }
 
