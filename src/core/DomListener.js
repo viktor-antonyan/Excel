@@ -23,7 +23,7 @@ export class DomListener {
   removeDomListener() {
     this.listener.forEach(listener=>{
       const callback = CreateCallbackName(listener)
-      this.root.remove(listener, this[callback])
+      this.root.off(listener, this[callback])
     })
   }
 }
