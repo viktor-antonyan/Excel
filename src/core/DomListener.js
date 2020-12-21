@@ -1,29 +1,40 @@
-import {CreateCallbackName} from '@core/util'
+import {capitalize} from '@core/utils'
 
 export class DomListener {
-  constructor(root,listener=[]) {
-    if(!root) {
-      throw new Error('root is not a define')
+  constructor($root, listeners = []) {
+    if (!$root) {
+      throw new Error(`No $root provided for DomListener!`)
     }
-    this.root = root
-    this.listener = listener
+    this.$root = $root
+    this.listeners = listeners
   }
-  addDomListener() {
-    this.listener.forEach(listener=>{
-      const callback = CreateCallbackName(listener)
-      if(!this[callback]) {
+
+  initDOMListeners() {
+    this.listeners.forEach(listener => {
+      const method = getMethodName(listener)
+      if (!this[method]) {
+        const name = this.name || ''
         throw new Error(
-            `${callback} is not implemented in ${this.name}`
+            `Method ${method} is not implemented in ${name} Component`
         )
       }
-      this[callback] = this[callback].bind(this)
-      this.root.on(listener, this[callback])
+      this[method] = this[method].bind(this)
+      // Тоже самое что и addEventListener
+      this.$root.on(listener, this[method])
     })
   }
-  removeDomListener() {
-    this.listener.forEach(listener=>{
-      const callback = CreateCallbackName(listener)
-      this.root.off(listener, this[callback])
+
+  removeDOMListeners() {
+    this.listeners.forEach(listener => {
+      const method = getMethodName(listener)
+      this.$root.off(listener, this[method])
     })
   }
 }
+
+// input => onInput
+function getMethodName(eventName) {
+  return 'on' + capitalize(eventName)
+}
+
+
