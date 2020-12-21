@@ -43,6 +43,7 @@
     height: 100%;
   }
   & .cell{
+    display: flex;
     padding: 5px;
     min-width: 40px;
     width: $cell_width;

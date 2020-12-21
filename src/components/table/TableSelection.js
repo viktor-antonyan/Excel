@@ -18,10 +18,4 @@ export class TableSelection {
     this.group = blocks
     this.group.forEach(el => el.addClass('selected'))
   }
-  selectIds() {
-    return this.group.map(i=>i.id())
-  }
-  toolbarStyle(style = {}) {
-    this.group.forEach($el=>$el.css(style))
-  }
 }
