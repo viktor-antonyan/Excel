@@ -26,7 +26,7 @@ class Dom {
 
   clear() {
     this.html('')
-     return this
+    return this
   }
 
   on(eventType, callback) {
